@@ -1,0 +1,19 @@
+type Meter {
+  id: ID!
+  serialNumber: String!
+  unit: String!
+  description: String!
+}
+
+scalar TimestampIso8601
+
+type Record {
+  id: ID!
+  timestamp: TimestampIso8601!
+  read: Float!
+}
+
+type Query {
+  meters: [Meter!]!
+  records(serialNumber: String!): [Record!]!
+}
