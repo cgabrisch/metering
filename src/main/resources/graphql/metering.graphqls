@@ -17,3 +17,8 @@ type Query {
   meters: [Meter!]!
   records(serialNumber: String!): [Record!]!
 }
+
+type Mutation {
+  createMeter(serialNumber: String!, unit: String!, description: String!): Meter!
+  addRecord(serialNumber: String!, timestamp: TimestampIso8601!, read: Float!): Record!
+}
