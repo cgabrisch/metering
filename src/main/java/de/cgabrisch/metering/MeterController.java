@@ -1,8 +1,10 @@
 package de.cgabrisch.metering;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
+
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -18,29 +20,29 @@ public class MeterController {
 
   MeterController() {
     var meter1 = new Meter();
-    meter1.setId(++lastMeterId);
+    meter1.setMeterId(++lastMeterId);
     meter1.setDescription("My description");
     meter1.setSerialNumber("SN-4711");
     meter1.setUnit("kWh");
     meters.add(meter1);
     var meter2 = new Meter();
-    meter2.setId(++lastMeterId);
+    meter2.setMeterId(++lastMeterId);
     meter2.setDescription("Description 4712");
     meter2.setSerialNumber("SN-4712");
     meter2.setUnit("m3");
     meters.add(meter2);
 
     var record1 = new Record();
-    record1.setId(++lastRecordId);
+    record1.setRecordId(++lastRecordId);
     record1.setMeter(meter1);
-    record1.setRead(12.34);
+    record1.setRead(BigDecimal.valueOf(12.34));
     record1.setTimestamp(LocalDateTime.now().minusHours(2));
     records.add(record1);
 
     var record2 = new Record();
-    record2.setId(++lastRecordId);
+    record2.setRecordId(++lastRecordId);
     record2.setMeter(meter1);
-    record2.setRead(13.45);
+    record2.setRead(BigDecimal.valueOf(13.45));
     record2.setTimestamp(LocalDateTime.now().minusHours(1));
     records.add(record2);
   }
@@ -54,7 +56,7 @@ public class MeterController {
   public Meter createMeter(
       @Argument String serialNumber, @Argument String unit, @Argument String description) {
     Meter meter = new Meter();
-    meter.setId(++lastMeterId);
+    meter.setMeterId(++lastMeterId);
     meter.setSerialNumber(serialNumber);
     meter.setUnit(unit);
     meter.setDescription(description);
@@ -72,7 +74,7 @@ public class MeterController {
 
   @MutationMapping
   public Record addRecord(
-      @Argument String serialNumber, @Argument LocalDateTime timestamp, @Argument Double read) {
+      @Argument String serialNumber, @Argument LocalDateTime timestamp, @Argument BigDecimal read) {
     Meter meter =
         meters.stream()
             .filter(m -> m.getSerialNumber().equals(serialNumber))
@@ -82,7 +84,7 @@ public class MeterController {
                     new IllegalArgumentException(
                         String.format("No meter with serial number '%s'", serialNumber)));
     Record r = new Record();
-    r.setId(++lastRecordId);
+    r.setRecordId(++lastRecordId);
     r.setMeter(meter);
     r.setTimestamp(timestamp);
     r.setRead(read);

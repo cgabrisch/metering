@@ -1,17 +1,17 @@
 package de.cgabrisch.metering;
 
 public class Meter {
-  private Long id;
+  private Long meterId;
   private String serialNumber;
   private String unit;
   private String description;
 
-  public Long getId() {
-    return id;
+  public Long getMeterId() {
+    return meterId;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setMeterId(Long meterId) {
+    this.meterId = meterId;
   }
 
   public String getSerialNumber() {

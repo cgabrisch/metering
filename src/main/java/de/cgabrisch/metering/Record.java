@@ -1,19 +1,20 @@
 package de.cgabrisch.metering;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Record {
-  private Long id;
+  private Long recordId;
   private Meter meter;
   private LocalDateTime timestamp;
-  private Double read;
+  private BigDecimal read;
 
-  public Long getId() {
-    return id;
+  public Long getRecordId() {
+    return recordId;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setRecordId(Long recordId) {
+    this.recordId = recordId;
   }
 
   public Meter getMeter() {
@@ -32,11 +33,11 @@ public class Record {
     this.timestamp = timestamp;
   }
 
-  public Double getRead() {
+  public BigDecimal getRead() {
     return read;
   }
 
-  public void setRead(Double read) {
+  public void setRead(BigDecimal read) {
     this.read = read;
   }
 }
