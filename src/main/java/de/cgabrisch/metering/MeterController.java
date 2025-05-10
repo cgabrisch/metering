@@ -1,14 +1,14 @@
 package de.cgabrisch.metering;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+
+import java.math.BigDecimal;
+import java.time.ZonedDateTime;
+import java.util.LinkedList;
+import java.util.List;
 
 @Controller
 public class MeterController {
@@ -36,14 +36,14 @@ public class MeterController {
     record1.setRecordId(++lastRecordId);
     record1.setMeter(meter1);
     record1.setRead(BigDecimal.valueOf(12.34));
-    record1.setTimestamp(LocalDateTime.now().minusHours(2));
+    record1.setTimestamp(ZonedDateTime.now().minusHours(2));
     records.add(record1);
 
     var record2 = new Record();
     record2.setRecordId(++lastRecordId);
     record2.setMeter(meter1);
     record2.setRead(BigDecimal.valueOf(13.45));
-    record2.setTimestamp(LocalDateTime.now().minusHours(1));
+    record2.setTimestamp(ZonedDateTime.now().minusHours(1));
     records.add(record2);
   }
 
@@ -74,7 +74,7 @@ public class MeterController {
 
   @MutationMapping
   public Record addRecord(
-      @Argument String serialNumber, @Argument LocalDateTime timestamp, @Argument BigDecimal read) {
+      @Argument String serialNumber, @Argument ZonedDateTime timestamp, @Argument BigDecimal read) {
     Meter meter =
         meters.stream()
             .filter(m -> m.getSerialNumber().equals(serialNumber))

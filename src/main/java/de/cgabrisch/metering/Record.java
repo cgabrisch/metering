@@ -1,7 +1,7 @@
 package de.cgabrisch.metering;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +23,7 @@ public class Record {
   private Meter meter;
 
   @Column(name = "ts")
-  private LocalDateTime timestamp;
+  private ZonedDateTime timestamp;
 
   private BigDecimal read;
 
@@ -43,11 +43,11 @@ public class Record {
     this.meter = meter;
   }
 
-  public LocalDateTime getTimestamp() {
+  public ZonedDateTime getTimestamp() {
     return timestamp;
   }
 
-  public void setTimestamp(LocalDateTime timestamp) {
+  public void setTimestamp(ZonedDateTime timestamp) {
     this.timestamp = timestamp;
   }
 
