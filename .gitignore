@@ -26,7 +26,8 @@ replay_pid*
 **/target/
 .project
 .classpath
-.settings/
-bin/
+.settings/not ignored
+/bin/
 
 .idea/
+/metering.iml
