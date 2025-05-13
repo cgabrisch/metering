@@ -1,5 +1,5 @@
 type Meter {
-  id: ID!
+  meterId: ID!
   serialNumber: String!
   unit: String!
   description: String!
@@ -8,7 +8,7 @@ type Meter {
 scalar TimestampIso8601
 
 type Record {
-  id: ID!
+  recordId: ID!
   timestamp: TimestampIso8601!
   read: Float!
 }
