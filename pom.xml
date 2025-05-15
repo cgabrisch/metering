@@ -11,19 +11,6 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>metering</name>
   <description>Tracking energy meters</description>
-  <url></url>
-  <licenses>
-    <license></license>
-  </licenses>
-  <developers>
-    <developer></developer>
-  </developers>
-  <scm>
-    <connection></connection>
-    <developerConnection></developerConnection>
-    <tag></tag>
-    <url></url>
-  </scm>
   <properties>
     <java.version>21</java.version>
     <spotless.version>2.44.4</spotless.version>
