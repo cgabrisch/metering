@@ -26,6 +26,7 @@
   </scm>
   <properties>
     <java.version>21</java.version>
+    <spotless.version>2.44.4</spotless.version>
   </properties>
   <dependencies>
     <dependency>
@@ -99,13 +100,13 @@
       <plugin>
         <groupId>com.diffplug.spotless</groupId>
         <artifactId>spotless-maven-plugin</artifactId>
-        <version>2.43.0</version>
+        <version>${spotless.version}</version>
         <configuration>
           <pom>
-            <sortPom></sortPom>
+            <sortPom/>
           </pom>
           <java>
-            <googleJavaFormat></googleJavaFormat>
+            <googleJavaFormat/>
           </java>
         </configuration>
       </plugin>
