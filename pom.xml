@@ -90,10 +90,10 @@
         <version>${spotless.version}</version>
         <configuration>
           <pom>
-            <sortPom/>
+            <sortPom></sortPom>
           </pom>
           <java>
-            <googleJavaFormat/>
+            <googleJavaFormat></googleJavaFormat>
           </java>
         </configuration>
         <executions>

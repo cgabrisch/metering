@@ -11,11 +11,11 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class MeterController {
   private final MeterService meterService;
-    private final RecordService recordService;
+  private final RecordService recordService;
 
   MeterController(MeterService meterService, RecordService recordService) {
-      this.meterService = meterService;
-      this.recordService = recordService;
+    this.meterService = meterService;
+    this.recordService = recordService;
   }
 
   @QueryMapping
