@@ -7,7 +7,7 @@ create table meter(
 
 create table measurement(
 	measurement_id bigserial primary key,
-	meter_id bigint references meter(meter_id),
+	meter_id bigint references meter(meter_id) not null,
 	instant timestamp with time zone not null,
 	measured_value numeric(19,5) not null
 );

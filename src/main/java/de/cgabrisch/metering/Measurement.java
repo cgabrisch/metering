@@ -1,12 +1,12 @@
 package de.cgabrisch.metering;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
@@ -17,14 +17,13 @@ public class Measurement {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long measurementId;
 
-  @ManyToOne
+  @ManyToOne(optional = false)
   @JoinColumn(name = "meter_id")
   private Meter meter;
 
-  @Column(name = "instant")
-  private ZonedDateTime instant;
+  @NotNull private ZonedDateTime instant;
 
-  private BigDecimal measuredValue;
+  @NotNull private BigDecimal measuredValue;
 
   public Long getMeasurementId() {
     return measurementId;
