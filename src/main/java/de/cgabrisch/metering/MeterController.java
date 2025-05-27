@@ -11,11 +11,11 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class MeterController {
   private final MeterService meterService;
-  private final RecordService recordService;
+  private final MeasurementService measurementService;
 
-  MeterController(MeterService meterService, RecordService recordService) {
+  MeterController(MeterService meterService, MeasurementService measurementService) {
     this.meterService = meterService;
-    this.recordService = recordService;
+    this.measurementService = measurementService;
   }
 
   @QueryMapping
@@ -30,13 +30,15 @@ public class MeterController {
   }
 
   @QueryMapping
-  public List<Record> records(@Argument String serialNumber) {
-    return recordService.getRecordsForMeter(serialNumber);
+  public List<Measurement> measurements(@Argument String serialNumber) {
+    return measurementService.getMeasurementsForMeter(serialNumber);
   }
 
   @MutationMapping
-  public Record addRecord(
-      @Argument String serialNumber, @Argument ZonedDateTime timestamp, @Argument BigDecimal read) {
-    return recordService.addRecordToMeter(serialNumber, timestamp, read);
+  public Measurement addMeasurement(
+      @Argument String serialNumber,
+      @Argument ZonedDateTime instant,
+      @Argument BigDecimal measuredValue) {
+    return measurementService.addMeasurementToMeter(serialNumber, instant, measuredValue);
   }
 }

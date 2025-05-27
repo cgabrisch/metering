@@ -7,18 +7,18 @@ type Meter {
 
 scalar TimestampIso8601
 
-type Record {
-  recordId: ID!
-  timestamp: TimestampIso8601!
-  read: Float!
+type Measurement {
+  measurementId: ID!
+  instant: TimestampIso8601!
+  measuredValue: Float!
 }
 
 type Query {
   meters: [Meter!]!
-  records(serialNumber: String!): [Record!]!
+  measurements(serialNumber: String!): [Measurement!]!
 }
 
 type Mutation {
   createMeter(serialNumber: String!, unit: String!, description: String!): Meter!
-  addRecord(serialNumber: String!, timestamp: TimestampIso8601!, read: Float!): Record!
+  addMeasurement(serialNumber: String!, instant: TimestampIso8601!, measuredValue: Float!): Measurement!
 }

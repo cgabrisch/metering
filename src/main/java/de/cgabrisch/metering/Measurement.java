@@ -11,27 +11,27 @@ import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 @Entity
-public class Record {
+public class Measurement {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long recordId;
+  private Long measurementId;
 
   @ManyToOne
   @JoinColumn(name = "meter_id")
   private Meter meter;
 
-  @Column(name = "ts")
-  private ZonedDateTime timestamp;
+  @Column(name = "instant")
+  private ZonedDateTime instant;
 
-  private BigDecimal read;
+  private BigDecimal measuredValue;
 
-  public Long getRecordId() {
-    return recordId;
+  public Long getMeasurementId() {
+    return measurementId;
   }
 
-  public void setRecordId(Long recordId) {
-    this.recordId = recordId;
+  public void setMeasurementId(Long measurementId) {
+    this.measurementId = measurementId;
   }
 
   public Meter getMeter() {
@@ -42,19 +42,19 @@ public class Record {
     this.meter = meter;
   }
 
-  public ZonedDateTime getTimestamp() {
-    return timestamp;
+  public ZonedDateTime getInstant() {
+    return instant;
   }
 
-  public void setTimestamp(ZonedDateTime timestamp) {
-    this.timestamp = timestamp;
+  public void setInstant(ZonedDateTime instant) {
+    this.instant = instant;
   }
 
-  public BigDecimal getRead() {
-    return read;
+  public BigDecimal getMeasuredValue() {
+    return measuredValue;
   }
 
-  public void setRead(BigDecimal read) {
-    this.read = read;
+  public void setMeasuredValue(BigDecimal measuredValue) {
+    this.measuredValue = measuredValue;
   }
 }

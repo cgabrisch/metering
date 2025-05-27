@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RecordRepository extends JpaRepository<Record, Long> {
-  @Query("select r from Record r where r.meter.serialNumber = :serialNumber")
-  List<Record> findBySerialNumber(String serialNumber);
+public interface MeasurementRepository extends JpaRepository<Measurement, Long> {
+  @Query("select m from Measurement m where m.meter.serialNumber = :serialNumber")
+  List<Measurement> findBySerialNumber(String serialNumber);
 }
