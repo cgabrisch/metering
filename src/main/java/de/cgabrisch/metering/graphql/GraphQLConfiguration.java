@@ -1,4 +1,4 @@
-package de.cgabrisch.metering;
+package de.cgabrisch.metering.graphql;
 
 import graphql.schema.GraphQLScalarType;
 import org.springframework.context.annotation.Bean;
@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.graphql.execution.RuntimeWiringConfigurer;
 
 @Configuration
-public class GraphQLConfiguration {
+class GraphQLConfiguration {
 
   @Bean
-  public RuntimeWiringConfigurer runtimeWiringConfigurer() {
+  RuntimeWiringConfigurer runtimeWiringConfigurer() {
     return (wiringBuilder) ->
         wiringBuilder.scalar(
             GraphQLScalarType.newScalar()

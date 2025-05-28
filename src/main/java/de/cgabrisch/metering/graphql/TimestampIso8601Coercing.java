@@ -1,4 +1,4 @@
-package de.cgabrisch.metering;
+package de.cgabrisch.metering.graphql;
 
 import graphql.GraphQLContext;
 import graphql.execution.CoercedVariables;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
-public class TimestampIso8601Coercing implements Coercing<LocalDateTime, String> {
+class TimestampIso8601Coercing implements Coercing<LocalDateTime, String> {
   @Override
   public String serialize(Object input, GraphQLContext context, Locale locale) {
     if (input instanceof LocalDateTime ldt) {
