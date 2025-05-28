@@ -1,4 +1,4 @@
-package de.cgabrisch.metering;
+package de.cgabrisch.metering.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

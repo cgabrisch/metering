@@ -1,4 +1,4 @@
-package de.cgabrisch.metering;
+package de.cgabrisch.metering.domain;
 
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
@@ -12,8 +12,7 @@ public class MeasurementService {
   private final MeterService meterService;
   private final MeasurementRepository measurementRepository;
 
-  public MeasurementService(
-      MeterService meterService, MeasurementRepository measurementRepository) {
+  MeasurementService(MeterService meterService, MeasurementRepository measurementRepository) {
     this.meterService = meterService;
     this.measurementRepository = measurementRepository;
   }

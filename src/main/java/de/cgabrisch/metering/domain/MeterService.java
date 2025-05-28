@@ -1,4 +1,4 @@
-package de.cgabrisch.metering;
+package de.cgabrisch.metering.domain;
 
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class MeterService {
   private final MeterRepository meterRepository;
 
-  public MeterService(MeterRepository meterRepository) {
+  MeterService(MeterRepository meterRepository) {
     this.meterRepository = meterRepository;
   }
 

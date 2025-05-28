@@ -1,9 +1,9 @@
 package de.cgabrisch.metering.graphql;
 
-import de.cgabrisch.metering.Measurement;
-import de.cgabrisch.metering.MeasurementService;
-import de.cgabrisch.metering.Meter;
-import de.cgabrisch.metering.MeterService;
+import de.cgabrisch.metering.domain.Measurement;
+import de.cgabrisch.metering.domain.MeasurementService;
+import de.cgabrisch.metering.domain.Meter;
+import de.cgabrisch.metering.domain.MeterService;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
