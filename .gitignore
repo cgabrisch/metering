@@ -31,3 +31,4 @@ replay_pid*
 
 .idea/
 /metering.iml
+/backend/pom.xml.versionsBackup
