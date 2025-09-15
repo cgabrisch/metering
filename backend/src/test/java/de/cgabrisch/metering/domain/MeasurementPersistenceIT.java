@@ -34,10 +34,7 @@ class MeasurementPersistenceIT {
 
     entityManager.persist(meter);
 
-    measurement = new Measurement();
-    measurement.setMeasuredValue(BigDecimal.valueOf(1L));
-    measurement.setInstant(ZonedDateTime.now());
-    measurement.setMeter(meter);
+    measurement = meter.createMeasurement(BigDecimal.valueOf(1L), ZonedDateTime.now());
   }
 
   @Test

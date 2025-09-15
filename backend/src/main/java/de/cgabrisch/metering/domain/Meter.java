@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 
 @Entity
 public class Meter {
@@ -55,5 +57,13 @@ public class Meter {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public Measurement createMeasurement(BigDecimal measuredValue, ZonedDateTime instant) {
+    Measurement measurement = new Measurement();
+    measurement.setMeasuredValue(measuredValue);
+    measurement.setInstant(instant);
+    measurement.setMeter(this);
+    return measurement;
   }
 }

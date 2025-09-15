@@ -30,10 +30,7 @@ public class MeasurementService {
                 () ->
                     new IllegalArgumentException(
                         String.format("No meter with serial number '%s'", meterSerialNumber)));
-    Measurement m = new Measurement();
-    m.setMeter(meter);
-    m.setInstant(instant);
-    m.setMeasuredValue(measuredValue);
+    Measurement m = meter.createMeasurement(measuredValue, instant);
 
     m = measurementRepository.save(m);
 

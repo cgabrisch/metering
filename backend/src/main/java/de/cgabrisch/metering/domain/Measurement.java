@@ -29,15 +29,11 @@ public class Measurement {
     return measurementId;
   }
 
-  public void setMeasurementId(Long measurementId) {
-    this.measurementId = measurementId;
-  }
-
   public Meter getMeter() {
     return meter;
   }
 
-  public void setMeter(Meter meter) {
+  void setMeter(Meter meter) {
     this.meter = meter;
   }
 

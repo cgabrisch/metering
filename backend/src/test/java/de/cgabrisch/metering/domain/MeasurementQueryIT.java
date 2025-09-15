@@ -31,10 +31,8 @@ class MeasurementQueryIT {
 
     List<Measurement> measurementsGas = new ArrayList<>();
     for (int i = 0; i < 2; i++) {
-      Measurement measurement = new Measurement();
-      measurement.setMeasuredValue(BigDecimal.valueOf((i + 1)));
-      measurement.setInstant(ZonedDateTime.now().plusDays(1));
-      measurement.setMeter(meterGas);
+      Measurement measurement =
+          meterGas.createMeasurement(BigDecimal.valueOf((i + 1)), ZonedDateTime.now().plusDays(1));
 
       measurementsGas.add(measurement);
       entityManager.persist(measurement);
@@ -48,10 +46,9 @@ class MeasurementQueryIT {
 
     List<Measurement> measurementsElectricity = new ArrayList<>();
     for (int i = 0; i < 4; i++) {
-      Measurement measurement = new Measurement();
-      measurement.setMeasuredValue(BigDecimal.valueOf((i + 1) * 10));
-      measurement.setInstant(ZonedDateTime.now().plusHours(1));
-      measurement.setMeter(meterElectricity);
+      Measurement measurement =
+          meterElectricity.createMeasurement(
+              BigDecimal.valueOf((i + 1) * 10), ZonedDateTime.now().plusHours(1));
 
       measurementsElectricity.add(measurement);
       entityManager.persist(measurement);
