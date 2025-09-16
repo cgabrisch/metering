@@ -13,12 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 @DataJpaTest
 @ActiveProfiles("integration-test")
-@Transactional
-class MeasurementPersistenceIT {
+class MeasurementPersistenceValidationIT {
   @Autowired private EntityManager entityManager;
 
   @Autowired private MeasurementRepository measurementRepository;
@@ -41,28 +39,31 @@ class MeasurementPersistenceIT {
   void doesNotPersistMeasurementWithoutMeter() {
     measurement.setMeter(null);
 
-    assertThrows(
-        DataIntegrityViolationException.class, () -> measurementRepository.save(measurement));
+    assertThrows(DataIntegrityViolationException.class, this::saveMeasurement);
   }
 
   @Test
   void doesNotPersistMeasurementWithoutInstant() {
     measurement.setInstant(null);
 
-    assertThrows(ConstraintViolationException.class, () -> measurementRepository.save(measurement));
+    assertThrows(ConstraintViolationException.class, this::saveMeasurement);
   }
 
   @Test
   void doesNotPersistMeasurementWithoutMeasuredValue() {
     measurement.setMeasuredValue(null);
 
-    assertThrows(ConstraintViolationException.class, () -> measurementRepository.save(measurement));
+    assertThrows(ConstraintViolationException.class, this::saveMeasurement);
   }
 
   @Test
   void persistsValidMeasurement() {
-    measurementRepository.save(measurement);
+    saveMeasurement();
 
     assertNotNull(measurement.getMeasurementId());
+  }
+
+  private void saveMeasurement() {
+    measurementRepository.saveAndFlush(measurement);
   }
 }
