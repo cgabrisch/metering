@@ -4,11 +4,8 @@ import de.cgabrisch.metering.domain.Measurement;
 import de.cgabrisch.metering.domain.MeasurementService;
 import de.cgabrisch.metering.domain.Meter;
 import de.cgabrisch.metering.domain.MeterService;
-import java.math.BigDecimal;
-import java.time.ZonedDateTime;
 import java.util.List;
 import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
@@ -27,22 +24,8 @@ class MeterGraphQLController {
     return meterService.findAll();
   }
 
-  @MutationMapping
-  Meter createMeter(
-      @Argument String serialNumber, @Argument String unit, @Argument String description) {
-    return meterService.createMeter(serialNumber, unit, description);
-  }
-
   @QueryMapping
   List<Measurement> measurements(@Argument String serialNumber) {
     return measurementService.getMeasurementsForMeter(serialNumber);
-  }
-
-  @MutationMapping
-  Measurement addMeasurement(
-      @Argument String serialNumber,
-      @Argument ZonedDateTime instant,
-      @Argument BigDecimal measuredValue) {
-    return measurementService.addMeasurementToMeter(serialNumber, instant, measuredValue);
   }
 }

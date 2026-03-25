@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import de.cgabrisch.metering.domain.MeasurementService;
+import de.cgabrisch.metering.domain.Meter;
 import de.cgabrisch.metering.domain.MeterService;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
@@ -70,9 +71,9 @@ class MeterControllerIT {
 
   @Test
   void listsMeasurements() throws Exception {
-    meterService.createMeter("M1", "kWh", "Meter 1");
+    Meter meter = meterService.createMeter("M1", "kWh", "Meter 1");
     ZonedDateTime now = ZonedDateTime.now();
-    measurementService.addMeasurementToMeter("M1", now, new BigDecimal("10.5"));
+    measurementService.addMeasurementToMeter(meter, now, new BigDecimal("10.5"));
 
     mvc.perform(get("/api/v1/meter/M1/measurement").with(oauth2Login()))
         .andExpect(status().isOk())

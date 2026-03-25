@@ -35,15 +35,15 @@ class MeterRestController {
   }
 
   @GetMapping("{serialNumber}/measurement")
-  List<Measurement> measurements(@PathVariable String serialNumber) {
-    return measurementService.getMeasurementsForMeter(serialNumber);
+  List<Measurement> measurements(@PathVariable("serialNumber") Meter meter) {
+    return measurementService.getMeasurementsForMeter(meter);
   }
 
   @PostMapping("{serialNumber}/measurement")
   Measurement addMeasurement(
-      @PathVariable String serialNumber,
+      @PathVariable("serialNumber") Meter meter,
       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime instant,
       @RequestParam BigDecimal measuredValue) {
-    return measurementService.addMeasurementToMeter(serialNumber, instant, measuredValue);
+    return measurementService.addMeasurementToMeter(meter, instant, measuredValue);
   }
 }

@@ -2,12 +2,13 @@ package de.cgabrisch.metering.domain;
 
 import jakarta.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-public class MeterService {
+public class MeterService implements Converter<String, Meter> {
   private final MeterRepository meterRepository;
 
   MeterService(MeterRepository meterRepository) {
@@ -28,7 +29,13 @@ public class MeterService {
     return meter;
   }
 
-  public Optional<Meter> findBySerialNumber(String serialNumber) {
-    return meterRepository.findBySerialNumber(serialNumber);
+  @Override
+  public Meter convert(@NonNull String serialNumber) {
+    return meterRepository
+        .findBySerialNumber(serialNumber)
+        .orElseThrow(
+            () ->
+                new IllegalArgumentException(
+                    String.format("No such meter with serial number %s", serialNumber)));
   }
 }

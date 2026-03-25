@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class MeasurementService {
-  private final MeterService meterService;
   private final MeasurementRepository measurementRepository;
 
-  MeasurementService(MeterService meterService, MeasurementRepository measurementRepository) {
-    this.meterService = meterService;
+  MeasurementService(MeasurementRepository measurementRepository) {
     this.measurementRepository = measurementRepository;
+  }
+
+  public List<Measurement> getMeasurementsForMeter(Meter meter) {
+    return getMeasurementsForMeter(meter.getSerialNumber());
   }
 
   public List<Measurement> getMeasurementsForMeter(String meterSerialNumber) {
@@ -22,14 +24,7 @@ public class MeasurementService {
   }
 
   public Measurement addMeasurementToMeter(
-      String meterSerialNumber, ZonedDateTime instant, BigDecimal measuredValue) {
-    Meter meter =
-        meterService
-            .findBySerialNumber(meterSerialNumber)
-            .orElseThrow(
-                () ->
-                    new IllegalArgumentException(
-                        String.format("No meter with serial number '%s'", meterSerialNumber)));
+      Meter meter, ZonedDateTime instant, BigDecimal measuredValue) {
     Measurement m = meter.createMeasurement(measuredValue, instant);
 
     m = measurementRepository.save(m);
