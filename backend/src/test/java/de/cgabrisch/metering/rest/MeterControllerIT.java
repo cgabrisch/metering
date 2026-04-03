@@ -1,7 +1,6 @@
 package de.cgabrisch.metering.rest;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oauth2Login;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -14,6 +13,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 import de.cgabrisch.metering.domain.MeasurementService;
 import de.cgabrisch.metering.domain.Meter;
 import de.cgabrisch.metering.domain.MeterService;
+import de.cgabrisch.metering.domain.RandomSerialNumberProvider;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -29,6 +29,7 @@ import org.springframework.web.context.WebApplicationContext;
 @ContextConfiguration(classes = MockOAuth2Config.class)
 @Transactional
 class MeterControllerIT {
+  @Autowired private RandomSerialNumberProvider randomSerialNumberProvider;
 
   @Autowired private WebApplicationContext context;
 
@@ -45,37 +46,40 @@ class MeterControllerIT {
 
   @Test
   void listsMeters() throws Exception {
-    meterService.createMeter("12345", "kWh", "Power Meter");
-    meterService.createMeter("67890", "m3", "Gas Meter");
+    String serialNumberPowerMeter = randomSerialNumberProvider.nextSerialNumber();
+    meterService.createMeter(serialNumberPowerMeter, "kWh", "Power Meter");
+    String serialNumberGasMeter = randomSerialNumberProvider.nextSerialNumber();
+    meterService.createMeter(serialNumberGasMeter, "m3", "Gas Meter");
 
     mvc.perform(get("/api/v1/meter").with(oauth2Login()))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$", hasSize(2)))
-        .andExpect(jsonPath("$[0].serialNumber", is("12345")))
-        .andExpect(jsonPath("$[1].serialNumber", is("67890")));
+        .andExpect(jsonPath("$[*].serialNumber", hasItem(serialNumberPowerMeter)))
+        .andExpect(jsonPath("$[*].serialNumber", hasItem(serialNumberGasMeter)));
   }
 
   @Test
   void addsMeter() throws Exception {
+    String serialNumber = randomSerialNumberProvider.nextSerialNumber();
     mvc.perform(
-            post("/api/v1/meter/ABCDE")
+            post("/api/v1/meter/{serialNumber}", serialNumber)
                 .param("unit", "kW")
                 .param("description", "New Meter")
                 .with(oauth2Login())
                 .with(csrf()))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.serialNumber", is("ABCDE")))
+        .andExpect(jsonPath("$.serialNumber", is(serialNumber)))
         .andExpect(jsonPath("$.unit", is("kW")))
         .andExpect(jsonPath("$.description", is("New Meter")));
   }
 
   @Test
   void listsMeasurements() throws Exception {
-    Meter meter = meterService.createMeter("M1", "kWh", "Meter 1");
+    String serialNumber = randomSerialNumberProvider.nextSerialNumber();
+    Meter meter = meterService.createMeter(serialNumber, "kWh", "Meter 1");
     ZonedDateTime now = ZonedDateTime.now();
     measurementService.addMeasurementToMeter(meter, now, new BigDecimal("10.5"));
 
-    mvc.perform(get("/api/v1/meter/M1/measurement").with(oauth2Login()))
+    mvc.perform(get("/api/v1/meter/{serialNumber}/measurement", serialNumber).with(oauth2Login()))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0].measuredValue", is(10.5)));
@@ -83,11 +87,12 @@ class MeterControllerIT {
 
   @Test
   void addsMeasurement() throws Exception {
-    meterService.createMeter("M2", "kWh", "Meter 2");
+    String serialNumber = randomSerialNumberProvider.nextSerialNumber();
+    meterService.createMeter(serialNumber, "kWh", "Meter 2");
     String instant = "2026-03-15T10:00:00+01:00";
 
     mvc.perform(
-            post("/api/v1/meter/M2/measurement")
+            post("/api/v1/meter/{serialNumber}/measurement", serialNumber)
                 .param("instant", instant)
                 .param("measuredValue", "123.45")
                 .with(oauth2Login())
