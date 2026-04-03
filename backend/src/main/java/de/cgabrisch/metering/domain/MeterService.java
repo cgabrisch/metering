@@ -30,12 +30,9 @@ public class MeterService implements Converter<String, Meter> {
   }
 
   @Override
-  public Meter convert(@NonNull String serialNumber) {
+  public Meter convert(@NonNull String serialNumber) throws NoSuchMeterException {
     return meterRepository
         .findBySerialNumber(serialNumber)
-        .orElseThrow(
-            () ->
-                new IllegalArgumentException(
-                    String.format("No such meter with serial number %s", serialNumber)));
+        .orElseThrow(() -> new NoSuchMeterException(serialNumber));
   }
 }
