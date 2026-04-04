@@ -5,11 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
-@DataJpaTestOnTestcontainer
+@SpringBootTest
+@PostgreSQLTestcontainer
+@Transactional
 class MeterRepositoryIT {
   @Autowired private EntityManager entityManager;
 

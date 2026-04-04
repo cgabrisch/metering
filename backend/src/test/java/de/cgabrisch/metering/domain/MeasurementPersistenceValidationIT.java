@@ -4,15 +4,19 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
-@DataJpaTestOnTestcontainer
+@SpringBootTest
+@PostgreSQLTestcontainer
+@Transactional
 class MeasurementPersistenceValidationIT {
   @Autowired private EntityManager entityManager;
 

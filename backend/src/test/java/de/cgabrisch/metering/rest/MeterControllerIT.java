@@ -10,10 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-import de.cgabrisch.metering.domain.MeasurementService;
-import de.cgabrisch.metering.domain.Meter;
-import de.cgabrisch.metering.domain.MeterService;
-import de.cgabrisch.metering.domain.RandomSerialNumberProvider;
+import de.cgabrisch.metering.domain.*;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +21,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-@SpringBootTest(properties = "spring.datasource.url=jdbc:tc:postgresql:15:///")
+@SpringBootTest
+@PostgreSQLTestcontainer
 @ContextConfiguration(classes = MockOAuth2Config.class)
 class MeterControllerIT {
   @Autowired private RandomSerialNumberProvider randomSerialNumberProvider;
