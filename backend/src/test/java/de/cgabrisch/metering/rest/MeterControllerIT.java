@@ -14,7 +14,6 @@ import de.cgabrisch.metering.domain.MeasurementService;
 import de.cgabrisch.metering.domain.Meter;
 import de.cgabrisch.metering.domain.MeterService;
 import de.cgabrisch.metering.domain.RandomSerialNumberProvider;
-import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +26,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest(properties = "spring.datasource.url=jdbc:tc:postgresql:15:///")
 @ContextConfiguration(classes = MockOAuth2Config.class)
-@Transactional
 class MeterControllerIT {
   @Autowired private RandomSerialNumberProvider randomSerialNumberProvider;
 
