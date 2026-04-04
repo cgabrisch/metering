@@ -20,7 +20,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest(properties = "spring.datasource.url=jdbc:tc:postgresql:15:///")
 @ContextConfiguration(classes = MockOAuth2Config.class)
-class SecurityConfigIT {
+class OAuth2ClientConfigurationIT {
 
   @Autowired private WebApplicationContext context;
 
