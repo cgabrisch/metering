@@ -36,7 +36,7 @@ class OAuth2ClientConfigurationIT {
   void redirectsAnonymousRequestToOAuth2Authorization(MockHttpServletRequestBuilder requestBuilder)
       throws Exception {
     mvc.perform(requestBuilder.with(anonymous()))
-        .andExpect(redirectedUrlPattern("**/oauth2/authorization/dummy"));
+        .andExpect(redirectedUrl("/oauth2/authorization/dummy"));
   }
 
   @ParameterizedTest
