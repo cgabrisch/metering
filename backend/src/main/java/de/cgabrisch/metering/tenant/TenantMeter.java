@@ -2,18 +2,22 @@ package de.cgabrisch.metering.tenant;
 
 import de.cgabrisch.metering.domain.Meter;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.util.Objects;
 
 @Entity
 @Table(name = "tenant_meter")
-public class TenantMeter {
-
+class TenantMeter {
   @Id
-  @ManyToOne
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
+  @OneToOne
   @JoinColumn(name = "meter_id")
   private Meter meter;
 
@@ -21,32 +25,26 @@ public class TenantMeter {
   @JoinColumn(name = "tenant_id")
   private Tenant tenant;
 
-  public Tenant getTenant() {
-    return tenant;
-  }
+  TenantMeter() {}
 
-  public void setTenant(Tenant tenant) {
+  TenantMeter(Meter meter, Tenant tenant) {
+    this.meter = meter;
     this.tenant = tenant;
   }
 
-  public Meter getMeter() {
+  Tenant getTenant() {
+    return tenant;
+  }
+
+  void setTenant(Tenant tenant) {
+    this.tenant = tenant;
+  }
+
+  Meter getMeter() {
     return meter;
   }
 
-  public void setMeter(Meter meter) {
+  void setMeter(Meter meter) {
     this.meter = meter;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    TenantMeter that = (TenantMeter) o;
-    return Objects.equals(meter, that.meter);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hashCode(meter);
   }
 }
